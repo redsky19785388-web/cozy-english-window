@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Mobile Base Resets ─── */
+
+/* Prevent iOS tap highlight flash on all interactive elements */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* ─── Avatar Shape Animations ─── */
 
 @keyframes egg-pulse {

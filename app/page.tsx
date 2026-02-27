@@ -22,23 +22,20 @@ export default function Home() {
     setIsLoaded(true);
   }, []);
 
-  const handleSubmit = useCallback(
-    (text: string) => {
-      const { xp, keywords } = calculateXP(text);
-      const entry: Entry = {
-        id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-        text,
-        xpGained: xp,
-        timestamp: Date.now(),
-        keywords,
-      };
-      setState((prev) => addEntry(prev, entry));
-      setLastXPGained(xp);
-      setActiveTab('avatar');
-      setTimeout(() => setLastXPGained(null), 3000);
-    },
-    []
-  );
+  const handleSubmit = useCallback((text: string) => {
+    const { xp, keywords } = calculateXP(text);
+    const entry: Entry = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      text,
+      xpGained: xp,
+      timestamp: Date.now(),
+      keywords,
+    };
+    setState((prev) => addEntry(prev, entry));
+    setLastXPGained(xp);
+    setActiveTab('avatar');
+    setTimeout(() => setLastXPGained(null), 3000);
+  }, []);
 
   const handleReset = useCallback(() => {
     if (window.confirm('本当にリセットしますか？全てのXPと記録が消えます。')) {
@@ -48,16 +45,28 @@ export default function Home() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="h-dvh bg-slate-950 flex items-center justify-center">
         <div className="text-slate-600 text-sm">Loading...</div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 flex flex-col max-w-md mx-auto">
-      {/* Header */}
-      <header className="px-4 pt-safe pt-6 pb-2">
+    /*
+     * h-dvh: dynamic viewport height — accounts for mobile browser chrome
+     * (address bar showing/hiding). Keeps layout fixed like a native app.
+     * max-w-md + mx-auto: centered on tablets/desktop, full-width on phones.
+     */
+    <main className="h-dvh bg-slate-950 flex flex-col max-w-md mx-auto overflow-hidden">
+
+      {/* ── Header ──
+          Uses CSS env() for safe area so content sits below the iPhone notch
+          when installed as a PWA (status-bar is transparent).
+      */}
+      <header
+        className="shrink-0 px-4 pb-2"
+        style={{ paddingTop: 'max(1.25rem, env(safe-area-inset-top))' }}
+      >
         <div className="flex items-baseline justify-between">
           <div>
             <h1 className="text-xl font-black text-violet-400 tracking-tight">ダメージXP</h1>
@@ -72,23 +81,23 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Tab navigation */}
-      <nav className="flex border-b border-slate-800/80 px-4 mt-2">
+      {/* ── Tab navigation (fixed, never scrolls away) ── */}
+      <nav className="shrink-0 flex border-b border-slate-800/80 px-4">
         <button
-          className={`py-3 px-1 mr-6 text-sm font-semibold border-b-2 transition-colors ${
+          className={`py-3 px-1 mr-6 text-sm font-semibold border-b-2 transition-colors active:opacity-70 ${
             activeTab === 'input'
               ? 'text-violet-400 border-violet-400'
-              : 'text-slate-500 border-transparent hover:text-slate-400'
+              : 'text-slate-500 border-transparent'
           }`}
           onClick={() => setActiveTab('input')}
         >
           戦利品回収
         </button>
         <button
-          className={`py-3 px-1 text-sm font-semibold border-b-2 transition-colors ${
+          className={`py-3 px-1 text-sm font-semibold border-b-2 transition-colors active:opacity-70 ${
             activeTab === 'avatar'
               ? 'text-violet-400 border-violet-400'
-              : 'text-slate-500 border-transparent hover:text-slate-400'
+              : 'text-slate-500 border-transparent'
           }`}
           onClick={() => setActiveTab('avatar')}
         >
@@ -99,8 +108,14 @@ export default function Home() {
         </button>
       </nav>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto px-4 py-5 pb-safe pb-8">
+      {/* ── Scrollable content area ──
+          flex-1 + overflow-y-auto fills remaining height.
+          padding-bottom uses env() so content clears the iPhone home indicator.
+      */}
+      <div
+        className="flex-1 overflow-y-auto px-4 pt-5"
+        style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom))' }}
+      >
         {activeTab === 'input' ? (
           <EmotionForm onSubmit={handleSubmit} />
         ) : (

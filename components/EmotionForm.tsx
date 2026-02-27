@@ -38,11 +38,16 @@ export default function EmotionForm({ onSubmit }: Props) {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        {/*
+          font-size MUST be 16px or larger on iOS to prevent Safari from
+          auto-zooming the viewport when the textarea receives focus.
+          text-base = 1rem = 16px — the minimum safe value.
+        */}
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="例：今日も先輩から理不尽な指摘を受けた。悔しかったけど耐えた。絶対に見返してやる..."
-          className="w-full h-44 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 text-sm resize-none focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 leading-relaxed"
+          className="w-full h-44 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 text-base resize-none focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 leading-relaxed"
         />
 
         {/* XP Preview */}
@@ -67,10 +72,11 @@ export default function EmotionForm({ onSubmit }: Props) {
           </div>
         )}
 
+        {/* min-h-[48px] ensures 48px minimum touch target (Apple HIG recommends ≥44pt) */}
         <button
           type="submit"
           disabled={!text.trim() || isSubmitting}
-          className="w-full py-3.5 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-sm font-bold transition-colors tracking-wide"
+          className="w-full min-h-[48px] bg-violet-600 hover:bg-violet-500 active:bg-violet-700 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-base font-bold transition-all tracking-wide"
         >
           {isSubmitting ? '変換中...' : '⚡ XPに変換する'}
         </button>
