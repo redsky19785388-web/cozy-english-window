@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Avatar Shape Animations ─── */
+
+@keyframes egg-pulse {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    filter: brightness(0.85) drop-shadow(0 0 6px rgba(107, 114, 128, 0.4));
+  }
+  50% {
+    transform: scale(1.08) translateY(-6px);
+    filter: brightness(1.05) drop-shadow(0 0 16px rgba(107, 114, 128, 0.7));
+  }
+}
+
+@keyframes ice-shimmer {
+  0%, 100% {
+    filter: brightness(0.9) drop-shadow(0 0 8px rgba(103, 232, 249, 0.5));
+    transform: scale(1);
+  }
+  50% {
+    filter: brightness(1.4) drop-shadow(0 0 24px rgba(103, 232, 249, 1));
+    transform: scale(1.05);
+  }
+}
+
+@keyframes flame-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(-3deg);
+    filter: brightness(0.9) drop-shadow(0 0 12px rgba(249, 115, 22, 0.7));
+  }
+  25% {
+    transform: scale(1.1) rotate(3deg);
+    filter: brightness(1.35) drop-shadow(0 0 24px rgba(249, 115, 22, 1));
+  }
+  50% {
+    transform: scale(0.96) rotate(-2deg);
+    filter: brightness(0.85) drop-shadow(0 0 6px rgba(249, 115, 22, 0.5));
+  }
+  75% {
+    transform: scale(1.07) rotate(2deg);
+    filter: brightness(1.15) drop-shadow(0 0 18px rgba(249, 115, 22, 0.85));
+  }
+}
+
+@keyframes iron-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 8px rgba(226, 232, 240, 0.5));
+  }
+  50% {
+    transform: rotate(180deg) scale(1.06);
+    filter: drop-shadow(0 0 22px rgba(226, 232, 240, 1));
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    filter: drop-shadow(0 0 8px rgba(226, 232, 240, 0.5));
+  }
+}
+
+@keyframes phoenix-rise {
+  0%, 100% {
+    transform: translateY(8px) scale(0.95);
+    filter: hue-rotate(0deg) brightness(1) drop-shadow(0 0 16px rgba(251, 191, 36, 0.6));
+  }
+  50% {
+    transform: translateY(-8px) scale(1.08);
+    filter: hue-rotate(25deg) brightness(1.5) drop-shadow(0 0 32px rgba(251, 191, 36, 1));
+  }
+}
+
+/* XP gain floating text */
+@keyframes xp-float {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.7);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.2);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-28px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-42px) scale(0.9);
+  }
+}
+
+.avatar-egg    { animation: egg-pulse    3s ease-in-out infinite; }
+.avatar-ice    { animation: ice-shimmer  2s ease-in-out infinite; }
+.avatar-flame  { animation: flame-flicker 1.5s ease-in-out infinite; }
+.avatar-iron   { animation: iron-spin    8s linear infinite; }
+.avatar-phoenix{ animation: phoenix-rise 2.5s ease-in-out infinite; }
+.xp-float      { animation: xp-float    2.5s ease-out forwards; }
