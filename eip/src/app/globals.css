@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+  --bg-void: #000000;
+  --bg-panel: #080808;
+  --red-primary: #c0392b;
+  --red-bright: #e74c3c;
+  --orange-warn: #e67e22;
+  --text-primary: #e8e8e8;
+  --text-dim: #666666;
+  --border-red: rgba(192, 57, 43, 0.5);
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-serif-jp: 'Noto Serif JP', 'Georgia', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #000;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle scanlines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.04) 3px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  z-index: 9999;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--red-primary); }
+
+/* ── Animations ─────────────────────────────────────────── */
+
+@keyframes flash-overlay {
+  0%   { opacity: 0; }
+  8%   { opacity: 0.8; }
+  18%  { opacity: 0; }
+  26%  { opacity: 0.5; }
+  36%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Custom utility classes ─────────────────────────────── */
+
+.animate-flash-overlay {
+  animation: flash-overlay 1.4s ease-out forwards;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 0.45s ease forwards;
+}
+
+.animate-blink {
+  animation: blink-cursor 1s step-end infinite;
+}
+
+textarea {
+  resize: none;
+  font-family: var(--font-mono);
+}
