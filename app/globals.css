@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent body scroll - the app fills the viewport exactly */
+html,
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* Smooth scroll for chat log */
+.chat-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar but keep functionality */
+.chat-scroll::-webkit-scrollbar {
+  display: none;
+}
+.chat-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Typing indicator dots animation */
+@keyframes bounce-dot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+}
+
+.dot-1 { animation: bounce-dot 1.2s ease-in-out infinite; }
+.dot-2 { animation: bounce-dot 1.2s ease-in-out 0.2s infinite; }
+.dot-3 { animation: bounce-dot 1.2s ease-in-out 0.4s infinite; }
